@@ -1,20 +1,12 @@
 <script lang="ts">
 	import landing from '$lib/img/landing-img.JPG';
+	import Nav from '$lib/components/Nav.svelte';
 </script>
 
-<!-- Navbar component -->
-<div class="flex self-end gap-14">
-    <div>home</div>
-    <div>books</div>
-    <div>home</div>
-    <div>home</div>
-</div>
+<div class="flex h-screen flex-col p-10">
+	<Nav />
 
-<!-- Content -->
-<div class="min-h-0 flex-1 self-stretch">
-    <img src={landing} alt="" class="h-full w-full object-cover" />
+	<div class="min-h-0 flex-1">
+		<img src={landing} alt="" class="h-full w-full object-cover" />
+	</div>
 </div>
-
-<!-- Footer -->
- <div class="flex self-stretch ">
- </div>
