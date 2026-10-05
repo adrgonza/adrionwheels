@@ -5,8 +5,7 @@
 	const links = [
 		{ href: '/', label: 'intro' },
 		{ href: '/projects', label: 'projects' },
-		{ href: '/notebooks', label: 'notebooks' },
-		{ href: '/contact', label: 'contact' }
+		{ href: '/notebooks', label: 'notebooks' }
 	] as const;
 
 	function isCurrent(href: (typeof links)[number]['href']) {
