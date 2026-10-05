@@ -3,7 +3,7 @@
 	import Nav from '$lib/components/Nav.svelte';
 </script>
 
-<div class="flex h-screen flex-col p-10">
+<div class="flex h-screen flex-col px-6 py-8 sm:px-12 lg:px-16">
 	<Nav />
 
 	<div class="min-h-0 flex-1">

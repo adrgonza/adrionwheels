@@ -1,12 +1,20 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import Nav from '$lib/components/Nav.svelte';
-	import { notebooks } from '$lib/notebooks/registry';
-</script>
+	import { notebooks, preloadImages, type Notebook } from '$lib/notebooks/registry';
 
-<svelte:head>
-	<title>Notebooks</title>
-</svelte:head>
+	let opening = $state<string | null>(null);
+
+	async function openNotebook(event: MouseEvent, notebook: Notebook) {
+		if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+		event.preventDefault();
+		if (opening) return;
+		opening = notebook.slug;
+		await preloadImages(notebook.images);
+		await goto(resolve('/notebooks/[slug]', { slug: notebook.slug }));
+	}
+</script>
 
 <main class="min-h-screen bg-[#e6e6e6] px-6 py-8 sm:px-12 lg:px-16">
 	<Nav />
@@ -16,9 +24,18 @@
 			<li>
 				<a
 					href={resolve('/notebooks/[slug]', { slug: notebook.slug })}
-					class="group block focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-neutral-800"
+					class="group block focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-neutral-800 {opening ===
+					notebook.slug
+						? 'cursor-wait'
+						: ''}"
+					aria-busy={opening === notebook.slug}
+					onclick={(event) => openNotebook(event, notebook)}
 				>
-					<div class="aspect-[1414/2000] overflow-hidden bg-[#e6c84a]">
+					<div
+						class="aspect-[1414/2000] overflow-hidden bg-[#e6c84a] {opening === notebook.slug
+							? 'opacity-60'
+							: ''}"
+					>
 						{#if notebook.cover}
 							<img
 								src={notebook.cover}
